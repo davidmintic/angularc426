@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,12 @@ export class BackendService {
 
   constructor(private http: HttpClient) {
 
-      const tk = localStorage.getItem('tk');
-      if(tk) {
-        this.token = tk;
-      }
+    const tk = localStorage.getItem('tk');
+    if (tk) {
+      this.token = tk;
+    }
 
-   }
+  }
 
   /**
    * 
@@ -35,6 +35,28 @@ export class BackendService {
     );
   }
 
+   /**
+   * 
+   * @param controlador: este parametro nos indica el punto de acceso al 
+   * servicio del backend
+   * @returns 
+   */
+    getRequestFilter(controlador: string, filtro: string): Observable<any> {
+
+      const parametros = new HttpParams().append('filter', filtro);
+
+      return this.http.get(
+        this.rutaRaiz + '/' + controlador,
+        {
+          headers: { 'Authorization': `Bearer ${this.token}` },
+          params: parametros
+        }
+          
+      );
+    }
+
+
+ 
   deleteRequest(controlador: string, id: string): Observable<any> {
 
     const url = this.rutaRaiz + '/' + controlador + '/' + id;

@@ -7,13 +7,15 @@ import { LoginComponent } from './login/login.component';
 import { ProgramasEnOfertaComponent } from './programas-en-oferta/programas-en-oferta.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.component'; 
+import { GruposComponent } from './grupos/grupos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProgramasEnOfertaComponent,
-    AdminUsuariosComponent
+    AdminUsuariosComponent,
+    GruposComponent
   ],
   imports: [
     BrowserModule,

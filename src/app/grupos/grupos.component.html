@@ -1,0 +1,83 @@
+<div class="p-4">
+
+    <section class="d-flex flex-row mb-4">
+
+        <!-- <button type="button" class="btn btn-primary me-3" (click)="iniciarAdicion()">Agregar</button> -->
+
+
+        <div class="d-flex flex-column">
+
+            <label for="" class="mb-2">Programas academicos: </label>
+
+            <select class="custom-select form-select" id="inputGroupSelect01" [(ngModel)]="programaSeleccionado"
+                (ngModelChange)="cambioDePrograma($event)">
+
+                <option [value]="programa.id" *ngFor="let programa of listaProgramasAcademicos">
+                    {{programa.nombre}}
+                </option>
+
+            </select>
+        </div>
+
+
+
+    </section>
+
+
+    <section class="mb-4">
+
+        <form [formGroup]="formUsuario" class="d-flex flex-row mb-4">
+            <div class="form-group me-3">
+                <label for="exampleInputEmail1">Nombre</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Nombre" formControlName="nombre">
+            </div>
+            <div class="form-group me-3">
+                <label for="exampleInputPassword1">Correo</label>
+                <input type="email" formControlName="email" class="form-control" id="exampleInputPassword1"
+                    placeholder="Correo">
+            </div>
+
+            <button *ngIf="modoCrud == 'adicion'" (click)="crearUsuarios()"
+                class="btn btn-primary cls-boton-guardar">Confirmar adición</button>
+            <button *ngIf="modoCrud == 'edicion'" (click)="editar()" class="btn btn-primary cls-boton-guardar">Confimar
+                edición</button>
+        </form>
+    </section>
+
+
+    <section>
+        <table class="table table-hover">
+
+            <thead>
+                <td>
+                    Nombre
+                </td>
+                <td>
+                    Acciones
+                </td>
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let grupo of listaGrupos">
+                    <td>
+                        {{grupo.nombre}}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary me-3"
+                            (click)="mostrarUsuarios(grupo.usuariosgrupo)">
+                            Mostrar usuarios
+                        </button>
+                    </td>
+                </tr>
+
+
+
+            </tbody>
+
+
+        </table>
+    </section>
+
+</div>
