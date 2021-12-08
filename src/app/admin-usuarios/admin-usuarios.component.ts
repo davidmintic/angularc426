@@ -13,6 +13,8 @@ export class AdminUsuariosComponent implements OnInit {
 
   formUsuario: any;
   listaUsuarios: any[] = [];
+  idUsuarioActual = '';
+  modoCrud = 'adicion';
 
 
   constructor(
@@ -54,6 +56,11 @@ export class AdminUsuariosComponent implements OnInit {
   }
 
 
+  iniciarAdicion(): void {
+    this.modoCrud = 'adicion';
+  }
+
+
   crearUsuarios(): void {
 
     const usuarioNuevo = this.formUsuario.getRawValue();
@@ -66,6 +73,7 @@ export class AdminUsuariosComponent implements OnInit {
           this.listaUsuarios.unshift(data);
 
           Swal.fire('Felicidades', 'Has creado un nuevo usuario', 'success');
+          this.formUsuario.reset();
           console.log(data);
         },
         error: (e) => {
@@ -79,5 +87,59 @@ export class AdminUsuariosComponent implements OnInit {
 
 
   }
+
+
+  iniciarEdicion(usuario: any): void {
+    this.formUsuario.patchValue(usuario);
+    this.idUsuarioActual = usuario.id;
+    this.modoCrud = 'edicion';
+  }
+
+  editar(): void {
+
+    const newUser = this.formUsuario.getRawValue();
+    this.servicioBackend.patchRequest('usuarios', this.idUsuarioActual, newUser).subscribe(
+      {
+        next: (data) => {
+
+          this.obtenerUsuarios();
+          Swal.fire('Felicidades', 'Has editado al usuario', 'success');
+          console.log(data);
+        },
+        error: (e) => {
+          console.log('error');
+        },
+        complete: () => {
+          console.log('completo');
+        }
+      }
+
+    );
+
+  }
+
+
+  eliminarUsuario(usuario: any) {
+
+    this.servicioBackend.deleteRequest('usuarios', usuario.id).subscribe(
+
+      {
+        next: (data) => {
+
+          this.obtenerUsuarios();
+          Swal.fire('!!!', 'Has eliminado al usuario ' + usuario.nombre, 'success');
+          console.log(data);
+        },
+        error: (e) => {
+          console.log('error');
+        },
+        complete: () => {
+          console.log('completo');
+        }
+      }
+    );
+
+  }
+
 
 }

@@ -2,7 +2,7 @@
 
     <section class="d-flex flex-row mb-4">
 
-        <button type="button" class="btn btn-primary me-3">Agregar</button>
+        <button type="button" class="btn btn-primary me-3" (click)="iniciarAdicion()">Agregar</button>
         <select class="custom-select" id="inputGroupSelect01">
             <option disabled>Tipo usuario...</option>
             <option value="1">Estudiante</option>
@@ -27,7 +27,10 @@
                     placeholder="Correo">
             </div>
 
-            <button (click)="crearUsuarios()" class="btn btn-primary">Guardar</button>
+            <button *ngIf="modoCrud == 'adicion'" (click)="crearUsuarios()"
+                class="btn btn-primary cls-boton-guardar">Confirmar adición</button>
+            <button *ngIf="modoCrud == 'edicion'" (click)="editar()" class="btn btn-primary cls-boton-guardar">Confimar
+                edición</button>
         </form>
     </section>
 
@@ -50,18 +53,22 @@
 
             <tbody>
 
-                <tr *ngFor="let u of listaUsuarios">
+                <tr *ngFor="let usuario of listaUsuarios">
                     <td>
-                        {{u.nombre}}
+                        {{usuario.nombre}}
                     </td>
 
                     <td>
-                        {{u.email}}
+                        {{usuario.email}}
                     </td>
 
                     <td>
-                        <button type="button" class="btn btn-secondary me-3">Editar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-secondary me-3" (click)="iniciarEdicion(usuario)">
+                            Editar
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="eliminarUsuario(usuario)">
+                            Eliminar
+                        </button>
                     </td>
                 </tr>
 

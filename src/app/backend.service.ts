@@ -8,8 +8,16 @@ import { HttpClient } from '@angular/common/http';
 export class BackendService {
 
   rutaRaiz = 'http://localhost:3000';
+  token = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+      const tk = localStorage.getItem('tk');
+      if(tk) {
+        this.token = tk;
+      }
+
+   }
 
   /**
    * 
@@ -18,7 +26,35 @@ export class BackendService {
    * @returns 
    */
   getRequest(controlador: string): Observable<any> {
-    return this.http.get(this.rutaRaiz + '/' + controlador);
+    return this.http.get(
+      this.rutaRaiz + '/' + controlador,
+      {
+        headers: { 'Authorization': `Bearer ${this.token}` }
+      }
+
+    );
+  }
+
+  deleteRequest(controlador: string, id: string): Observable<any> {
+
+    const url = this.rutaRaiz + '/' + controlador + '/' + id;
+    return this.http.delete(
+      url,
+      {
+        headers: { 'content-type': 'application/json' }
+      });
+  }
+
+  patchRequest(controlador: string, id: string, datos: string): Observable<any> {
+
+    const url = this.rutaRaiz + '/' + controlador + '/' + id;
+    return this.http.patch(
+      url,
+      datos, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
   }
 
   postRequest(controlador: string, datos: string): Observable<any> {
@@ -27,14 +63,23 @@ export class BackendService {
     return this.http.post(
       url,
       datos, {
-      headers: { 'content-type': 'application/json'}
+      headers: { 'content-type': 'application/json' }
     });
   }
 
   autenticar(credenciales: string): Observable<any> {
-    const filter = '{"where": ' + credenciales + '}';
-    const filterEncode = encodeURIComponent(filter);
-    return this.http.get(this.rutaRaiz + '/usuarios?filter=' + filterEncode);
+    // const filter = '{"where": ' + credenciales + '}';
+    // const filterEncode = encodeURIComponent(filter);
+    // return this.http.get(this.rutaRaiz + '/usuarios?filter=' + filterEncode);
+
+    return this.http.post(
+      this.rutaRaiz + '/autenticar',
+      credenciales,
+      {
+        headers: { 'content-type': 'application/json' }
+      }
+    );
+
   }
 
 

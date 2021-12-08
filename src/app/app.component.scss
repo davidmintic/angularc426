@@ -10,3 +10,47 @@
     bottom: 0;
     width: 100%;
 }
+
+.cls-body-app {
+    width: 100%;
+}
+
+.cls-sidebar-app {
+    height: calc(100vh - 110px);
+    transform: translateX(-100%);
+
+    .cls-item-menu {
+        cursor: pointer;
+        transition: 0.6s all;
+        -webkit-transition: 0.6s all;
+        -moz-transition: 0.6s all;
+        -ms-transition: 0.6s all;
+        -o-transition: 0.6s all;
+    }
+
+    .cls-item-menu:hover {
+        background: #a12751 !important;
+    }
+}
+
+.cls-animate-sidebar-open {
+    animation: cls-ani 0.3s linear forwards;
+    -webkit-animation: cls-ani 0.3s linear forwards;
+}
+
+@keyframes cls-ani {
+    0% {
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
+    }
+}
