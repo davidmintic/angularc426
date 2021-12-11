@@ -3,7 +3,8 @@
 
     <h6 (click)="togleSideBar()">
         <!-- <i class="fa fa-windows"></i> -->
-        <img src="/assets/images/iconos/menu.png" alt="" class="me-2" style="cursor: pointer;">
+        <img src="/assets/images/iconos/menu.png" *ngIf="servicioGlobal.rutaActual != 'sesion/login'" alt=""
+            class="me-2" style="cursor: pointer;">
         Universidad libre
     </h6>
 
@@ -12,7 +13,8 @@
 
 <div class="cls-body-container d-flex flex-row">
 
-    <div class="cls-sidebar-app" [ngClass]="{'cls-animate-sidebar-open': openSideBar}">
+    <div *ngIf="servicioGlobal.rutaActual != 'sesion/login'" class="cls-sidebar-app"
+        [ngClass]="{'cls-animate-sidebar-open': openSideBar}">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100%;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="32">
@@ -23,21 +25,11 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
 
-                <li class="nav-item" routerLink="programas-en-oferta">
-                    <a class="nav-link active cls-item-menu" aria-current="page">
+                <li class="nav-item mb-2" [routerLink]="item.ruta" *ngFor="let item of servicioGlobal.modulos">
+                    <a class="nav-link active cls-item-menu" aria-current="page"
+                        [ngStyle]="{'background': item.bgcolor ? item.bgcolor : '#0d6efd'}">
 
-                        Ver programas en oferta
-                    </a>
-                </li>
-                <li routerLink="admin-usuarios">
-                    <a class="nav-link text-white cls-item-menu">
-                        Admin. de usuarios
-                    </a>
-                </li>
-
-                <li routerLink="grupos">
-                    <a class="nav-link text-white cls-item-menu">
-                        Grupos
+                        {{item.nombre}}
                     </a>
                 </li>
             </ul>

@@ -30,7 +30,7 @@ export class AutorizacionGuard implements CanActivate, CanActivateChild {
           'Ups no tiene sesión activa',
           'error'
         );
-        this.router.navigate(['/login']);
+        this.router.navigate(['/sesion/login']);
         return false;
       }
       

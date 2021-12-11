@@ -15,7 +15,7 @@ export class AppComponent {
 
   constructor(
     private servicioBackend: BackendService,
-    private servicioGlobal: GlobalService
+    public servicioGlobal: GlobalService
   ) {
 
   }

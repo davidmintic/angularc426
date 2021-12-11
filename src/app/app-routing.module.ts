@@ -12,17 +12,17 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'sesion',
+    loadChildren: () => import('./sesion/sesion.module').then(m => m.SesionModule)
   },
   {
     path: 'grupos',
     component: GruposComponent
   },
   {
-    path: 'admin-usuarios',
+    path: 'admin',
     canActivate: [AutorizacionGuard],
-    component: AdminUsuariosComponent
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'programas-en-oferta',

@@ -35,28 +35,36 @@ export class BackendService {
     );
   }
 
-   /**
-   * 
-   * @param controlador: este parametro nos indica el punto de acceso al 
-   * servicio del backend
-   * @returns 
-   */
-    getRequestFilter(controlador: string, filtro: string): Observable<any> {
+  /**
+  * 
+  * @param controlador: este parametro nos indica el punto de acceso al 
+  * servicio del backend
+  * @returns 
+  */
+  getRequestFilter(controlador: string, filtro: string): Observable<any> {
 
-      const parametros = new HttpParams().append('filter', filtro);
+    const parametros = new HttpParams().append('filter', filtro);
 
-      return this.http.get(
-        this.rutaRaiz + '/' + controlador,
-        {
-          headers: { 'Authorization': `Bearer ${this.token}` },
-          params: parametros
-        }
-          
-      );
-    }
+    return this.http.get(
+      this.rutaRaiz + '/' + controlador,
+      {
+        headers: { 'Authorization': `Bearer ${this.token}` },
+        params: parametros
+      }
+    );
+  }
 
 
- 
+  // getUsersByGroup(groupId: string): Observable<Array<GroupUserAttr>> {
+  //   return this.http.get<Array<GroupUserAttr>>(this.endpoint, {
+  //     params: {
+  //       filter: JSON.stringify({ where: { groupId } }),
+  //     },
+  //   });
+  // }
+
+
+
   deleteRequest(controlador: string, id: string): Observable<any> {
 
     const url = this.rutaRaiz + '/' + controlador + '/' + id;
@@ -103,6 +111,10 @@ export class BackendService {
     );
 
   }
+}
 
 
+export interface GroupUserAttr {
+  nombre: string,
+  id: string
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Md5 } from 'ts-md5/dist/md5';
 import { BackendService } from '../backend.service';
+import { GlobalService } from '../services/global.service';
 
 interface Usuario {
   codigo: string;
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private servicioBackend: BackendService,
+    private servicioGlobal: GlobalService,
     private router: Router
   ) {
 
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.servicioGlobal.rutaActual = 'sesion/login';
   }
 
   autenticar(): void {
@@ -50,8 +53,12 @@ export class LoginComponent implements OnInit {
           if (respuesta && respuesta.data) {
 
             if (respuesta.tk) {
+              this.servicioBackend.token = respuesta.tk;
               localStorage.setItem('tk', respuesta.tk);
-              this.router.navigate(['/admin-usuarios'])
+              localStorage.setItem('perfil', JSON.stringify(respuesta.data.perfil));
+              localStorage.setItem('nombreUsuario', respuesta.data.nombre);
+              this.servicioGlobal.actualizarSideBar();
+              this.router.navigate(['/admin/admin-usuarios']);
             }
 
             alert('Felicidades estas logueado');

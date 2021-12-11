@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from '../backend.service';
 import Swal from 'sweetalert2'
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -19,7 +20,8 @@ export class AdminUsuariosComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private servicioBackend: BackendService
+    private servicioBackend: BackendService,
+    private servicioGlobal: GlobalService
   ) {
 
     this.formUsuario = this.fb.group(
@@ -34,6 +36,8 @@ export class AdminUsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.servicioGlobal.rutaActual = 'admin/admin-usuarios';
   }
 
   obtenerUsuarios(): void {
